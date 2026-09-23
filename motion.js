@@ -98,17 +98,26 @@
         } else if (child.nodeType === 1 && child.tagName !== 'BR') split(child);
       });
     };
-    h1.setAttribute('aria-label', h1.textContent.replace(/\s+/g, ' ').trim());
+    h1.setAttribute('aria-label', h1.innerText.replace(/\s+/g, ' ').trim());
     split(h1);
     h1.querySelectorAll('.w').forEach(w => w.setAttribute('aria-hidden', 'true'));
     if (!finePointer) return;
     // Ola: las letras cercanas al cursor se levantan
     const chars = [...h1.querySelectorAll('.ch')];
+    // Primero se miden todas las letras y luego se escribe, para no forzar recálculos de layout
+    let pending = null;
     h1.addEventListener('pointermove', e => {
-      chars.forEach(ch => {
-        const r = ch.getBoundingClientRect();
-        const d = Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height / 2));
-        ch.style.setProperty('--lift', Math.max(0, 1 - d / 140).toFixed(3));
+      if (pending) { pending = e; return; }
+      pending = e;
+      requestAnimationFrame(() => {
+        const { clientX, clientY } = pending;
+        const lifts = chars.map(ch => {
+          const r = ch.getBoundingClientRect();
+          const d = Math.hypot(clientX - (r.left + r.width / 2), clientY - (r.top + r.height / 2));
+          return Math.max(0, 1 - d / 140).toFixed(3);
+        });
+        chars.forEach((ch, i) => ch.style.setProperty('--lift', lifts[i]));
+        pending = null;
       });
     });
     h1.addEventListener('pointerleave', () => chars.forEach(ch => ch.style.setProperty('--lift', 0)));
@@ -202,13 +211,14 @@
     const update = () => {
       ticking = false;
       const y = scrollY;
-      if (y < innerHeight * 1.5) layers.forEach(([el, fn]) => Object.assign(el.style, fn(y)));
-      banners.forEach(img => {
+      // Lecturas primero, escrituras después
+      const shifts = banners.map(img => {
         const r = img.parentElement.getBoundingClientRect();
-        if (r.bottom < 0 || r.top > innerHeight) return;
-        const offset = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
-        img.style.translate = `0 ${offset * -r.height * .08}px`;
+        if (r.bottom < 0 || r.top > innerHeight) return null;
+        return (r.top + r.height / 2 - innerHeight / 2) / innerHeight * -r.height * .08;
       });
+      if (y < innerHeight * 1.5) layers.forEach(([el, fn]) => Object.assign(el.style, fn(y)));
+      banners.forEach((img, i) => { if (shifts[i] !== null) img.style.translate = `0 ${shifts[i]}px`; });
     };
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
     update();
