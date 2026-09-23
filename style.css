@@ -37,3 +37,45 @@
 
 header nav{gap:clamp(12px,2vw,30px)}
 @media(max-width:1000px){header{height:auto;min-height:96px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px;gap:12px}header nav{order:3;width:100%;justify-content:center;flex-wrap:wrap;gap:12px 22px}header nav a,header nav a:not([href="servicios.html"]){display:block;font-size:13px}}
+/* Animaciones de la página principal (motion.js) */
+@media (prefers-reduced-motion:no-preference){
+@keyframes rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
+@keyframes emblem-in{from{opacity:0;transform:scale(.7) rotate(-14deg)}to{opacity:1;transform:none}}
+@keyframes float{0%,100%{translate:0 0;rotate:0deg}50%{translate:0 -14px;rotate:2deg}}
+@keyframes pulse-dot{0%,100%{box-shadow:0 0 0 0 #ed493899}70%{box-shadow:0 0 0 10px #ed493800}}
+@keyframes scroll-hint{0%,100%{transform:none}50%{transform:translateY(5px)}}
+@keyframes marquee{to{transform:translateX(-50%)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero .eyebrow{animation:rise .8s .1s cubic-bezier(.2,.7,.2,1) both}
+.hero h1{animation:rise 1s .25s cubic-bezier(.2,.7,.2,1) both}
+.hero h1 .outline{display:inline-block;animation:rise 1s .45s cubic-bezier(.2,.7,.2,1) both}
+.hero h1 em{display:inline-block;animation:rise 1s .6s cubic-bezier(.2,.7,.2,1) both}
+.hero-summary{animation:rise 1s .8s cubic-bezier(.2,.7,.2,1) both}
+.hero-bottom{animation:rise 1s 1s cubic-bezier(.2,.7,.2,1) both}
+.hero-emblem{animation:emblem-in 1.3s .35s cubic-bezier(.2,.8,.2,1) both}
+.hero-emblem img{animation:float 7s 1.7s ease-in-out infinite;transform:translate(var(--tx,0),var(--ty,0));transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.eyebrow i{animation:pulse-dot 2.2s ease-out infinite}
+.hero-bottom a{display:inline-block;animation:scroll-hint 2s ease-in-out infinite}
+.discipline-strip.is-marquee{display:block;overflow:hidden;padding-inline:0;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;width:max-content;animation:marquee 32s linear infinite}
+.discipline-strip:hover .marquee-track{animation-play-state:paused}
+.marquee-group{display:flex;align-items:center;gap:48px;padding-right:48px;white-space:nowrap}
+.marquee-group b{display:inline-block!important;animation:spin 9s linear infinite}
+.motion .reveal{opacity:0;transform:translateY(40px);transition:opacity .9s cubic-bezier(.2,.7,.2,1) var(--delay,0ms),transform .9s cubic-bezier(.2,.7,.2,1) var(--delay,0ms)}
+.motion .reveal.in{opacity:1;transform:none}
+.motion .section-label.reveal{transform:translateX(-24px)}
+.motion .section-label.reveal.in{transform:none}
+.motion .archive figure.reveal{transform:scale(.94)}
+.motion .archive figure.reveal.in{transform:none}
+.motion .dance img{transform:scale(1.12);transition:transform 2.4s cubic-bezier(.2,.7,.2,1)}
+.motion .dance.in img{transform:none}
+.motion .statement.reveal{opacity:1;transform:none}
+.motion .statement .word{display:inline-block;opacity:0;transform:translateY(.4em);filter:blur(6px);transition:opacity .7s,transform .7s,filter .7s;transition-delay:calc(var(--i)*70ms)}
+.motion .statement.in .word{opacity:1;transform:none;filter:none}
+.project-card{transition:transform .35s cubic-bezier(.2,.7,.2,1),background .35s}
+.project-card:hover{transform:translateY(-6px)}
+.service-list article{transition:background .25s,padding-left .35s cubic-bezier(.2,.7,.2,1)}
+.service-list article:hover{padding-left:14px}
+.service-list .service-symbol{display:inline-block;transition:transform .3s,color .3s}
+.service-list article:hover .service-symbol{transform:translate(4px,-4px) rotate(45deg);color:var(--red)}
+}
