@@ -158,3 +158,4 @@ header,.hero,.battle-hero{background:transparent}
 @media(max-width:800px){.timeline-recap{grid-column:auto;max-width:320px}}
 .about-photo{margin:4px 0 6px;max-width:420px;border:1px solid var(--line)}.about-photo img{display:block;width:100%;height:auto;filter:saturate(.9)}
 .about-photo img{aspect-ratio:4/5;object-fit:cover;object-position:50% 0}
+.about-person>p,.about-person>ul{max-width:820px}
