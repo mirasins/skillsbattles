@@ -192,7 +192,7 @@
     });
   };
   magnetic(document.querySelector('.hero-emblem'));
-  magnetic(document.querySelector('.battle-mark'), { strength: .8 });
+  magnetic(document.querySelector('.battle-mark'), { strength: .35 });
 
   // Inclinación 3D de fotos y tarjetas al pasar el mouse
   if (finePointer) {
