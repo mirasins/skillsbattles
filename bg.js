@@ -52,14 +52,6 @@
       g.addColorStop(1, `rgba(${RED},0)`);
       ctx.fillStyle = g;
       ctx.fillRect(light.x - 300, light.y - 300, 600, 600);
-      // núcleo oscuro con anillo de lente (horizonte de sucesos)
-      const core = ctx.createRadialGradient(light.x, light.y, 0, light.x, light.y, 34);
-      core.addColorStop(0, `rgba(0,0,0,${.55 * light.on})`);
-      core.addColorStop(.62, `rgba(0,0,0,${.35 * light.on})`);
-      core.addColorStop(.8, `rgba(${RED},${.28 * light.on})`);
-      core.addColorStop(1, `rgba(${RED},0)`);
-      ctx.fillStyle = core;
-      ctx.fillRect(light.x - 34, light.y - 34, 68, 68);
     }
 
     // Ondas activas
@@ -131,7 +123,7 @@
     }
 
     if (hole) {                           // agujero negro que sigue al cursor
-      hole.style.transform = `translate(${light.x}px,${light.y}px) scale(${.4 + light.on * .6})`;
+      hole.style.transform = `translate(${light.tx}px,${light.ty}px) scale(${.4 + light.on * .6})`;
       hole.style.opacity = light.on;
     }
 
