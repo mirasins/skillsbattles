@@ -141,3 +141,13 @@ header,.hero,.battle-hero{background:transparent}
 .timeline-pair .timeline-media{margin-top:0}
 .timeline-pair .timeline-media+.timeline-media:before{content:none}
 @media(max-width:800px){.timeline-item.has-pair{grid-template-columns:1fr!important}}
+.timeline-recap{grid-column:1/-1;justify-self:center;display:flex;align-items:center;gap:28px;width:min(100%,620px);margin-top:18px;padding:18px;border:1px solid var(--line);background:#ffffff04}
+.timeline-item a.recap-card{position:relative;display:block;flex:0 0 130px;padding:0;border:1px solid var(--line);overflow:hidden}
+.recap-card img{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:cover;filter:saturate(.9);transition:transform .4s,filter .4s}
+.recap-card:hover img{transform:scale(1.05);filter:saturate(1.1)}
+.recap-play{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;background:#0b0b0ecc;border:1px solid var(--red);color:var(--red);font-size:14px;padding-left:3px;transition:transform .25s}
+.recap-card:hover .recap-play{transform:scale(1.12)}
+.recap-info{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.recap-info small{font:11px 'JetBrains Mono',monospace;letter-spacing:2px;text-transform:uppercase;color:var(--red)}
+.recap-info strong{font-size:clamp(18px,1.8vw,24px);font-weight:500;letter-spacing:-.01em}
+@media(max-width:800px){.timeline-recap{gap:18px;padding:14px}.timeline-item a.recap-card{flex-basis:110px}}
