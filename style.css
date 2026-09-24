@@ -159,3 +159,4 @@ header,.hero,.battle-hero{background:transparent}
 .about-photo{margin:4px 0 6px;max-width:420px;border:1px solid var(--line)}.about-photo img{display:block;width:100%;height:auto;filter:saturate(.9)}
 .about-photo img{aspect-ratio:4/5;object-fit:cover;object-position:50% 0}
 .about-person>p,.about-person>ul{max-width:820px}
+.inc-duration{margin-top:28px;font:13px/1.6 'JetBrains Mono',monospace;letter-spacing:1.5px;color:var(--muted)}.inc-duration span{color:var(--red)}
