@@ -186,3 +186,8 @@ header,.hero,.battle-hero{background:transparent}
 .battle-loop:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#0b0b0e 0,transparent 18%,transparent 70%,#0b0b0ee6);pointer-events:none}
 .battle-loop-label{position:absolute;left:clamp(16px,4vw,48px);bottom:22px;z-index:1;margin:0;font:12px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--paper)}
 .battle-loop-label span{color:var(--red)}
+
+/* Ajustes móviles: la cronología entra deslizándose desde la derecha y no debe ensanchar la página; la franja de disciplinas en marquesina brilla sin cambiar de ancho. */
+.battles-page{overflow-x:clip}
+@keyframes disc-glow{0%,30%,100%{color:inherit;text-shadow:none}12%{color:var(--red);text-shadow:0 0 14px #d61d1d99}}
+.motion .discipline-strip.is-marquee span{animation-name:disc-glow}

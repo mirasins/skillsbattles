@@ -2,8 +2,10 @@
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.documentElement.classList.add('motion');
 
-  // Franjas de texto en movimiento continuo
-  document.querySelectorAll('.battle-ticker').forEach(strip => {
+  // Franjas de texto en movimiento continuo (la de disciplinas solo en móvil, donde no cabe en una línea)
+  const strips = [...document.querySelectorAll('.battle-ticker')];
+  if (matchMedia('(max-width: 600px)').matches) strips.push(...document.querySelectorAll('.discipline-strip'));
+  strips.forEach(strip => {
     const track = document.createElement('div');
     track.className = 'marquee-track';
     const group = () => {
