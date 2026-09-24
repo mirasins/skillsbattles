@@ -160,3 +160,29 @@ header,.hero,.battle-hero{background:transparent}
 .about-photo img{aspect-ratio:4/5;object-fit:cover;object-position:50% 0}
 .about-person>p,.about-person>ul{max-width:820px}
 .inc-duration{margin-top:28px;font:13px/1.6 'JetBrains Mono',monospace;letter-spacing:1.5px;color:var(--muted)}.inc-duration span{color:var(--red)}
+
+.inc-facts{padding-top:0;padding-bottom:0}
+.inc-facts dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));margin:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.inc-facts dl>div{padding:22px 18px 22px 0}
+.inc-facts dt{font:11px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:8px}
+.inc-facts dd{margin:0;font-size:16px;line-height:1.4}
+.work-synopsis>div>p.inc-quote{font-family:Cinzel,serif;font-size:clamp(20px,2.2vw,28px);color:var(--paper);line-height:1.4}
+.inc-alt{background:#0e0e11}
+.inc-list{margin:10px 0 0;padding-left:1.4em;display:grid;gap:14px;color:var(--muted);font-size:17px;line-height:1.7;max-width:820px}
+.inc-list li::marker{color:var(--red);font:13px 'JetBrains Mono',monospace}
+.inc-subtitle{margin:40px 0 20px;font:12px 'JetBrains Mono',monospace;letter-spacing:2px;text-transform:uppercase;color:var(--red)}
+.inc-palette{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.inc-swatches{display:block;height:54px;margin-bottom:14px;background:linear-gradient(90deg,var(--a) 0 25%,var(--b) 25% 50%,var(--c) 50% 75%,var(--d) 75%);border:1px solid var(--line)}
+.inc-palette h4{margin:0 0 6px;font-size:16px}
+.work-synopsis .inc-palette p{font-size:15px;line-height:1.6;color:var(--muted);margin:0}
+.inc-people-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1px;margin-top:40px;background:var(--line);border:1px solid var(--line)}
+.inc-people-grid article{background:#0b0b0e;padding:28px 24px}
+.inc-people-grid h3{margin:0 0 6px;font-size:22px;letter-spacing:-.01em}
+.inc-people-grid .inc-role{font:11px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin:0 0 14px}
+.inc-people-grid p{color:var(--muted);font-size:15px;line-height:1.65;margin:0}
+.inc-people-grid{background:none;border:0;gap:0}.inc-people-grid article{border:1px solid var(--line);margin:0 -1px -1px 0}
+.battle-loop{position:relative;height:min(62vh,620px);min-height:320px;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#0b0b0e}
+.battle-loop video{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 45%;filter:saturate(.95) contrast(1.05)}
+.battle-loop:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,#0b0b0e 0,transparent 18%,transparent 70%,#0b0b0ee6);pointer-events:none}
+.battle-loop-label{position:absolute;left:clamp(16px,4vw,48px);bottom:22px;z-index:1;margin:0;font:12px 'JetBrains Mono',monospace;letter-spacing:1.5px;text-transform:uppercase;color:var(--paper)}
+.battle-loop-label span{color:var(--red)}
