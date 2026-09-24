@@ -113,9 +113,21 @@
       }
     }
 
-    // Puntos
-    for (let k = 0; k < cols * rows; k++) {
+    // Puntos: los que están en reposo se dibujan en un solo trazo por color
+    for (let pass = 0; pass < 2; pass++) {
+      const ivoryPass = pass === 1;
+      ctx.beginPath();
+      for (let k = 0; k < cols * rows; k++) {
+        if (glow[k] >= .02 || ((k * 7) % 11 === 0) !== ivoryPass) continue;
+        ctx.moveTo(px[k] + 1.15, py[k]);
+        ctx.arc(px[k], py[k], 1.15, 0, 6.2832);
+      }
+      ctx.fillStyle = ivoryPass ? `rgba(${IVORY},.1)` : `rgba(${RED},.17)`;
+      ctx.fill();
+    }
+    for (let k = 0; k < cols * rows; k++) {   // puntos iluminados, uno a uno
       const g = glow[k];
+      if (g < .02) continue;
       const ivory = (k * 7) % 11 === 0;
       ctx.fillStyle = `rgba(${ivory ? IVORY : RED},${(ivory ? .1 : .17) + g * .75})`;
       ctx.beginPath();
@@ -123,8 +135,9 @@
       ctx.fill();
     }
 
-    if (fctx) {                           // polen: flota, ondula y se desvanece
+    if (fctx && (parts.length || fxDirty)) {  // polen: flota, ondula y se desvanece
       fctx.clearRect(0, 0, W, H);
+      fxDirty = parts.length > 0;
       let wp = 0;
       for (let i = 0; i < parts.length; i++) {
         const p = parts[i];
@@ -155,7 +168,7 @@
 
   let hole = null, fx = null, fctx = null;
   const parts = [];         // estela de partículas del cursor
-  let lastX = null, lastY = null;
+  let lastX = null, lastY = null, fxDirty = false;
   if (fine.matches) {
     hole = document.createElement('div');
     hole.className = 'black-hole';
