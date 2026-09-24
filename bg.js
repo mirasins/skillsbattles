@@ -32,6 +32,7 @@
     ox = new Float32Array(n); oy = new Float32Array(n); glow = new Float32Array(n);
     px = new Float32Array(n); py = new Float32Array(n);
     rowId = new Int32Array(rows).fill(-1e9);
+    if (fx) { fx.width = W * dpr; fx.height = H * dpr; fctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
     if (reduce.matches) draw(0);
   }
 
@@ -122,6 +123,27 @@
       ctx.fill();
     }
 
+    if (fctx) {                           // partículas: se dispersan y caen de vuelta al agujero
+      fctx.clearRect(0, 0, W, H);
+      let wp = 0;
+      for (let i = 0; i < parts.length; i++) {
+        const p = parts[i];
+        p.life -= .016;
+        if (p.life <= 0) continue;
+        const dx = light.tx - p.x, dy = light.ty - p.y, d = Math.hypot(dx, dy) || 1;
+        const g = Math.min(.35, 40 / (d * d + 100));  // atracción suave, fuerte sólo cerca
+        p.vx = (p.vx + dx / d * g - dy / d * g * .6) * .97;
+        p.vy = (p.vy + dy / d * g + dx / d * g * .6) * .97;
+        p.x += p.vx; p.y += p.vy;
+        if (d < 6 && p.life < p.max - .25) continue;  // tragada por el agujero
+        const a = Math.min(1, p.life * 1.4);
+        fctx.fillStyle = `rgba(${p.c},${a * .85})`;
+        fctx.beginPath(); fctx.arc(p.x, p.y, p.r * (.4 + a * .6), 0, 6.2832); fctx.fill();
+        parts[wp++] = p;
+      }
+      parts.length = wp;
+    }
+
     if (hole) {                           // agujero negro que sigue al cursor
       hole.style.transform = `translate(${light.tx}px,${light.ty}px) scale(${.4 + light.on * .6})`;
       hole.style.opacity = light.on;
@@ -138,13 +160,20 @@
   const start = () => { if (!frame && !reduce.matches && !document.hidden) frame = requestAnimationFrame(draw); };
   const stop = () => { cancelAnimationFrame(frame); frame = 0; };
 
-  let hole = null;
+  let hole = null, fx = null, fctx = null;
+  const parts = [];         // estela de partículas del cursor
+  let lastX = null, lastY = null;
   if (fine.matches && !reduce.matches) {
     hole = document.createElement('div');
     hole.className = 'black-hole';
     hole.setAttribute('aria-hidden', 'true');
     hole.innerHTML = '<i></i>';
     document.body.append(hole);
+    fx = document.createElement('canvas');
+    fx.className = 'cursor-particles';
+    fx.setAttribute('aria-hidden', 'true');
+    fctx = fx.getContext('2d');
+    document.body.append(fx);
   }
 
   size();
@@ -153,6 +182,17 @@
     addEventListener('pointermove', e => {
       if (e.pointerType !== 'mouse') return;
       light.tx = e.clientX; light.ty = e.clientY; light.ton = 1;
+      if (fctx && lastX !== null) {
+        const n = Math.min(4, Math.hypot(e.clientX - lastX, e.clientY - lastY) / 8 | 0);
+        for (let i = 0; i < n && parts.length < 160; i++) {
+          const a = Math.random() * 6.2832, v = .4 + Math.random() * 1.2;
+          parts.push({ x: e.clientX, y: e.clientY, vx: Math.cos(a) * v, vy: Math.sin(a) * v,
+            r: .8 + Math.random() * 1.6, life: 0, max: .7 + Math.random() * .8,
+            c: Math.random() < .2 ? IVORY : RED });
+          parts[parts.length - 1].life = parts[parts.length - 1].max;
+        }
+      }
+      lastX = e.clientX; lastY = e.clientY;
     }, { passive: true });
     document.addEventListener('pointerleave', () => { light.ton = 0; });
   }
