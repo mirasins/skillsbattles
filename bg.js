@@ -12,7 +12,8 @@
 
   const RED = '214,29,29', IVORY = '242,238,230';
   const PARALLAX = .16;      // el campo se desplaza más lento que el contenido
-  const REACH = 210;         // radio de influencia del cursor
+  const REACH = 300;         // radio de influencia del cursor
+  const GRAVITY = 2600;      // intensidad del pozo gravitatorio
   let W = 0, H = 0, SP = 46, cols = 0, rows = 0, dpr = 1;
   let ox, oy, glow, px, py, rowId;
   const light = { x: -9e3, y: -9e3, tx: -9e3, ty: -9e3, on: 0, ton: 0 };
@@ -51,6 +52,14 @@
       g.addColorStop(1, `rgba(${RED},0)`);
       ctx.fillStyle = g;
       ctx.fillRect(light.x - 300, light.y - 300, 600, 600);
+      // núcleo oscuro con anillo de lente (horizonte de sucesos)
+      const core = ctx.createRadialGradient(light.x, light.y, 0, light.x, light.y, 34);
+      core.addColorStop(0, `rgba(0,0,0,${.55 * light.on})`);
+      core.addColorStop(.62, `rgba(0,0,0,${.35 * light.on})`);
+      core.addColorStop(.8, `rgba(${RED},${.28 * light.on})`);
+      core.addColorStop(1, `rgba(${RED},0)`);
+      ctx.fillStyle = core;
+      ctx.fillRect(light.x - 34, light.y - 34, 68, 68);
     }
 
     // Ondas activas
@@ -75,11 +84,16 @@
           y += Math.cos(t * .00045 + c * .6 + r * .2) * 3;
         }
         let tx = 0, ty = 0, tg = 0;
-        if (animate && light.on > .01) {  // atracción hacia el cursor
+        if (animate && light.on > .01) {  // pozo gravitatorio en el cursor
           const dx = light.x - hx, dy = light.y - y, d = Math.hypot(dx, dy);
           if (d < REACH && d > 0) {
-            const f = (1 - d / REACH) ** 2 * light.on;
-            tx += dx / d * f * 26; ty += dy / d * f * 26; tg += f;
+            const fade = (1 - d / REACH) ** 1.5 * light.on;
+            // caída tipo 1/d, sin cruzar el horizonte (radio mínimo 14px)
+            const pull = Math.min(d - 14, GRAVITY / (d + 30)) * fade;
+            const swirl = pull * .45;     // componente orbital: el campo gira alrededor
+            const nx = dx / d, ny = dy / d;
+            tx += nx * pull - ny * swirl; ty += ny * pull + nx * swirl;
+            tg += Math.min(1, fade * 1.3);
           }
         }
         for (let i = 0; i < pulses.length; i++) {  // empuje de las ondas
@@ -116,6 +130,11 @@
       ctx.fill();
     }
 
+    if (hole) {                           // agujero negro que sigue al cursor
+      hole.style.transform = `translate(${light.x}px,${light.y}px) scale(${.4 + light.on * .6})`;
+      hole.style.opacity = light.on;
+    }
+
     frame = animate && !document.hidden ? requestAnimationFrame(draw) : 0;
   }
 
@@ -126,6 +145,15 @@
 
   const start = () => { if (!frame && !reduce.matches && !document.hidden) frame = requestAnimationFrame(draw); };
   const stop = () => { cancelAnimationFrame(frame); frame = 0; };
+
+  let hole = null;
+  if (fine.matches && !reduce.matches) {
+    hole = document.createElement('div');
+    hole.className = 'black-hole';
+    hole.setAttribute('aria-hidden', 'true');
+    hole.innerHTML = '<i></i>';
+    document.body.append(hole);
+  }
 
   size();
   addEventListener('resize', size, { passive: true });
