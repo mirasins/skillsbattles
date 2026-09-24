@@ -111,3 +111,11 @@ header nav{gap:clamp(12px,2vw,30px)}
 .tilt:hover{will-change:transform;transition:transform .12s linear,translate .9s,scale .9s,opacity .9s,background .3s}
 .inc-hero-video{scale:1.12}
 }
+
+/* Fondo interactivo (bg.js): el campo de puntos vive detrás de todo el sitio */
+#bg-field{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none}
+header,.hero,.battle-hero{background:transparent}
+.archive,.contact,.service-closing,.work-synopsis,.battle-gallery{background:#16161cb8}
+.battle-program{background:#1a1a20b3}
+.battle-timeline{background:radial-gradient(circle at 78% -12%,#ed49381f,transparent 58%)}
+.project-card{background:linear-gradient(145deg,#1b1112e6,#0e0e11e6 70%)}
