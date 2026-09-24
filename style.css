@@ -151,3 +151,8 @@ header,.hero,.battle-hero{background:transparent}
 .recap-info small{font:11px 'JetBrains Mono',monospace;letter-spacing:2px;text-transform:uppercase;color:var(--red)}
 .recap-info strong{font-size:clamp(18px,1.8vw,24px);font-weight:500;letter-spacing:-.01em}
 @media(max-width:800px){.timeline-recap{gap:18px;padding:14px}.timeline-item a.recap-card{flex-basis:110px}}
+.timeline-item{row-gap:26px}
+.timeline-recap{grid-column:3;justify-self:stretch;width:auto;max-width:320px;margin-top:0;gap:18px;padding:12px}
+.timeline-item a.recap-card{flex-basis:84px}
+.recap-info strong{font-size:17px}
+@media(max-width:800px){.timeline-recap{grid-column:auto;max-width:320px}}
