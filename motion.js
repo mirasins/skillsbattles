@@ -18,6 +18,14 @@
     track.append(first, second);
     strip.replaceChildren(track);
     strip.classList.add('is-marquee');
+    // Repetir el contenido hasta cubrir pantallas anchas, para que la franja nunca se corte
+    const base = [...first.children];
+    const need = Math.max(screen.width, innerWidth) + 200;
+    for (let n = 0; first.offsetWidth && first.offsetWidth < need && n < 10; n++) {
+      base.forEach(el => { first.append(el.cloneNode(true)); second.append(el.cloneNode(true)); });
+    }
+    // Velocidad constante sin importar el largo
+    if (first.offsetWidth) track.style.animationDuration = `${first.offsetWidth / 45}s`;
   });
 
   // Frase final palabra por palabra
