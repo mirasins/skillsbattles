@@ -156,3 +156,4 @@ header,.hero,.battle-hero{background:transparent}
 .timeline-item a.recap-card{flex-basis:84px}
 .recap-info strong{font-size:17px}
 @media(max-width:800px){.timeline-recap{grid-column:auto;max-width:320px}}
+.timeline-item a.timeline-media.is-tall img{aspect-ratio:361/640!important;height:auto!important;object-fit:contain!important}
