@@ -3,7 +3,7 @@
   document.documentElement.classList.add('motion');
 
   // Franjas de texto en movimiento continuo
-  document.querySelectorAll('.discipline-strip, .battle-ticker').forEach(strip => {
+  document.querySelectorAll('.battle-ticker').forEach(strip => {
     const track = document.createElement('div');
     track.className = 'marquee-track';
     const group = () => {

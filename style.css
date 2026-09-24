@@ -128,3 +128,5 @@ header,.hero,.battle-hero{background:transparent}
 .about-person.is-pending{border:1px dashed var(--line);padding:24px;min-height:320px}
 .about-placeholder{color:var(--muted);opacity:.7}
 @media(max-width:800px){.about-grid{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.motion .discipline-strip span{animation:disc-pulse 6s ease-in-out infinite}.motion .discipline-strip span:nth-of-type(2){animation-delay:1.5s}.motion .discipline-strip span:nth-of-type(3){animation-delay:3s}.motion .discipline-strip span:nth-of-type(4){animation-delay:4.5s}.motion .discipline-strip b{display:inline-block;animation:spin 9s linear infinite}}
+@keyframes disc-pulse{0%,30%,100%{color:inherit;text-shadow:none;letter-spacing:1px}12%{color:var(--red);text-shadow:0 0 14px #d61d1d99;letter-spacing:2.5px}}
