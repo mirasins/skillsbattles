@@ -191,3 +191,5 @@ header,.hero,.battle-hero{background:transparent}
 .battles-page{overflow-x:clip}
 @keyframes disc-glow{0%,30%,100%{color:inherit;text-shadow:none}12%{color:var(--red);text-shadow:0 0 14px #d61d1d99}}
 .motion .discipline-strip.is-marquee span{animation-name:disc-glow}
+.about-photo,.about-person>h3,.about-person>.service-tagline{transition:transform .35s cubic-bezier(.2,.7,.2,1)}.about-person>h3,.about-person>.service-tagline{justify-self:start;transform-origin:left center}
+@media(hover:hover){.about-photo:hover{transform:scale(1.04)}.about-person>h3:hover,.about-person>.service-tagline:hover{transform:scale(1.05)}}
