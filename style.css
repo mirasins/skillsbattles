@@ -191,3 +191,4 @@ header,.hero,.battle-hero{background:transparent}
 .battles-page{overflow-x:clip}
 @keyframes disc-glow{0%,30%,100%{color:inherit;text-shadow:none}12%{color:var(--red);text-shadow:0 0 14px #d61d1d99}}
 .motion .discipline-strip.is-marquee span{animation-name:disc-glow}
+.about-person>.section-label,.about-person>h3{text-align:center;justify-self:center}.about-photo{justify-self:center;width:100%;margin-left:auto;margin-right:auto}
